@@ -4,7 +4,7 @@
 
 DisasterScope is an event-centric multimodal dataset and benchmark that connects regional satellite observations with ground-level social images, synchronized audio and video, optional observation text, report passages, and provenance metadata. It is designed for disaster type recognition, three-level severity assessment, and satellite-grounded evidence retrieval.
 
-The primary benchmark contains **12,159 fixed event-context bundles** from **24 disaster events** and **9 hazard classes**. Its dynamic-media inventory contains **273 source videos**, **628 curated audio-video segments**, **9.02 hours** of material, and **5,473 temporal windows**.
+DisasterScope contains **12,159 fixed event-context bundles** from **24 disaster events** and **9 disaster classes**. Its dynamic-media inventory contains **273 source videos**, **628 curated audio-video segments**, **9.02 hours** of material, and **5,473 temporal windows**.
 
 ![dataset_benchmark_overview.png](docs/readme_assets/dataset_benchmark_overview.png)
 
@@ -15,7 +15,6 @@ The primary benchmark contains **12,159 fixed event-context bundles** from **24 
 - **Explicit modality roles:** satellite, social image, audio, video, and observation text remain separate inputs rather than being silently merged.
 - **Fixed bundle identities:** full-input and unavailable-input evaluations use the same samples, making modality-removal comparisons easier to interpret.
 - **Multiple tasks:** one benchmark supports disaster type classification, ordinal severity assessment, and same-event evidence retrieval.
-- **Traceable provenance:** source identifiers, label routes, availability masks, and asset reuse are recorded for audit.
 
 An event-context bundle indicates that its views belong to the same canonical disaster context. It does **not** imply that the satellite and ground-level observations show the same street, structure, or exact moment. Audio and video within a curated segment are synchronized.
 
@@ -39,7 +38,7 @@ The following inventory reproduces the main dataset statistics reported in the p
 | Item                                | Count                 | Native unit                    |
 | ----------------------------------- | ---------------------:| ------------------------------ |
 | Events                              | 24                    | event                          |
-| Hazard classes                      | 9                     | class                          |
+| Disaster classes                    | 9                     | class                          |
 | Fixed benchmark bundles             | 12,159                | bundle                         |
 | Training / validation / test        | 8,162 / 2,156 / 1,841 | bundle                         |
 | Satellite groups used               | 1,254                 | asset group                    |
@@ -52,15 +51,15 @@ The following inventory reproduces the main dataset statistics reported in the p
 
 ### Covered disaster classes
 
-DisasterScope covers tropical cyclones, earthquakes, wildfires, tornadoes or windstorms, volcanoes, armed conflict, explosions, tsunamis, and floods. Coverage is not uniform across hazards or regions; results should therefore be interpreted within the represented source distribution.
+DisasterScope covers tropical cyclones, earthquakes, wildfires, tornadoes or windstorms, volcanoes, armed conflict, explosions, tsunamis, and floods. Coverage is not uniform across disaster classes or regions; results should therefore be interpreted within the represented source distribution.
 
-![DisasterScope hazard, partition, and severity distributions](docs/readme_assets/dataset_distributions.png)
+![DisasterScope disaster-class, partition, and severity distributions](docs/readme_assets/dataset_distributions.png)
 
 ## Benchmark tasks
 
 | Task                         | Evaluation unit               | Target                                              | Primary metrics     | Evaluation setting                                             |
 | ---------------------------- | ----------------------------- | --------------------------------------------------- | ------------------- | -------------------------------------------------------------- |
-| Disaster type classification | Event-context bundle          | 9 hazard classes                                    | Macro-F1            | SIAV and SIAVT; full and unavailable-input conditions          |
+| Disaster type classification | Event-context bundle          | 9 disaster classes                                  | Macro-F1            | SIAV and SIAVT; full and unavailable-input conditions          |
 | Severity assessment          | Eligible event-context bundle | 3 ordered severity levels                           | Macro-F1, MAE, QWK  | SIAV and SIAVT; full and unavailable-input conditions          |
 | Evidence retrieval           | Satellite-grounded query      | Binary same-event relevance over 3 candidate routes | nDCG@10, mAP, Hit@K | Social-image, audio-video, and combined ground-evidence routes |
 
